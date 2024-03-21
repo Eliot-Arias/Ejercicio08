@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Ejercicio08.ViewModel"
+             x:Class="Ejercicio08.View.TareasView">
+    <ContentPage.BindingContext>
+        <vm:TareasViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout>
+                <Label Text="Administrador de Tareas" 
+                       FontSize="20" 
+                       FontAttributes="Bold" 
+                       TextColor="Black" 
+                       Margin="10"/>
+            </StackLayout>
+            <!--Agregar-->
+            <Frame IsVisible="{Binding VistaDetalle}">
+                <StackLayout>
+                    <Entry x:Name="TareaName"
+                           Text="{Binding TareaName}"
+                           Placeholder="Nombre de la Tarea"/>
+                    <Entry x:Name="Description"
+                           Text="{Binding Description}"
+                           Placeholder="Descripción"/>
+                    <Label Text="Fecha de la Tarea"/>
+                    <DatePicker x:Name="Fecha"
+                                Date="{Binding Fecha, Mode=TwoWay}">
+                    </DatePicker>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="{Binding Comando, Mode=TwoWay}"
+                                Command="{Binding cmdProcesarTarea}"
+                                BackgroundColor="Aqua"
+                                WidthRequest="100"
+                                TextColor="Black"/>
+                        <Button Text="Cancelar" 
+                                Command="{Binding cmdCancelarTarea}" 
+                                BackgroundColor="DarkGreen" 
+                                WidthRequest="100" 
+                                TextColor="White"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <ListView x:Name="TareasList"
+                      ItemsSource="{Binding TareasList, Mode=TwoWay}"
+                      IsVisible="True"
+                      SelectedItem="{Binding TareaSeleccionada, Mode=TwoWay}"
+                      HasUnevenRows="True"
+                      BackgroundColor="Transparent" 
+                      Margin="10"
+                      SeparatorColor="Red" 
+                      SelectionMode="Single">
+                <ListView.Header>
+                    <StackLayout Orientation="Horizontal"
+                                 BackgroundColor="Blue">
+                        <Button BackgroundColor="Transparent" 
+                                TextTransform="None" 
+                                TextColor="Green" 
+                                FontAttributes="Bold" 
+                                Text="Agregar" 
+                                Command="{Binding cmdAgregarTarea}" />
+                        <Button BackgroundColor="Transparent" 
+                                TextTransform="None" 
+                                TextColor="Red" 
+                                FontAttributes="Bold" 
+                                Text="Borrar" 
+                                Command="{Binding cmdBorrarTarea}" />
+                        <Button BackgroundColor="Transparent" 
+                                TextTransform="None" 
+                                TextColor="SkyBlue" 
+                                FontAttributes="Bold" 
+                                Text="Actualizar" 
+                                Command="{Binding cmdActualizarTarea}" />
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Vertical"
+                                         Margin="10"
+                                         BackgroundColor="Salmon">
+                                <Label Text="{Binding TareaName}"/>
+                                <Label Text="{Binding Description}"/>
+                                <Label Text="{Binding Fecha}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
